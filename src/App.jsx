@@ -52,13 +52,13 @@ function Ilustracion() {
       {/* Área con tiempo libre */}
       <rect x="10" y="170" width="160" height="130" rx="16" fill="#ffffff" fillOpacity="0.1" stroke="#ffffff" strokeOpacity="0.5" />
       <text x="90" y="196" textAnchor="middle" fill="#ffffff" fontSize="14" fontWeight="700">Consumer Insights</text>
-      <Persona x={50} y={242} color="#d62839" />
-      <Persona x={110} y={242} color="#2e9e5b" />
+      <Persona x={50} y={242} color="#2e9e5b" />
+      <Persona x={110} y={242} color="#d62839" />
       <rect x="30" y="272" width="120" height="10" rx="5" fill="#ffffff" fillOpacity="0.25" />
       <rect x="30" y="272" width="40" height="10" rx="5" fill="#d62839" />
 
       {/* Conexión de ayuda */}
-      <path d="M110 215 C 110 150, 330 220, 330 160" fill="none" stroke="#f77f00" strokeWidth="3" strokeDasharray="7 6" strokeLinecap="round" />
+      <path d="M126 242 C 240 242, 330 236, 330 164" fill="none" stroke="#f77f00" strokeWidth="3" strokeDasharray="7 6" strokeLinecap="round" />
       <path d="M322 168 L330 154 L338 168" fill="none" stroke="#f77f00" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
 
       {/* Semáforo de carga */}
