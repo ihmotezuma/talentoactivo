@@ -22,4 +22,9 @@ TalentoActivo permite que:
 
 ## Enlace público
 
-(Se agregará al publicar en Cloudflare Pages.)
+https://talentoactivo.pages.dev
+
+## Avance por fases
+
+- [x] **Fase 1:** cimientos. Proyecto en GitHub, base de datos en Supabase y página de bienvenida publicada en Cloudflare Pages.
+- [ ] Fase 2: inicio de sesión, roles y datos de ejemplo de la Consultora Delfos.
