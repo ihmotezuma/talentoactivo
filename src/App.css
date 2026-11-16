@@ -163,3 +163,266 @@
   font-size: 0.85rem;
   border-top: 1px solid var(--borde);
 }
+
+/* ---------- Cabecera con botón Salir ---------- */
+.cabecera-interior {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cabecera .marca {
+  margin: 0;
+}
+
+.marca-boton {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
+.boton-salir {
+  background: transparent;
+  color: var(--blanco);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.boton-salir:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.cargando {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--texto-suave);
+}
+
+/* ---------- Pantalla de Entrar ---------- */
+.login-pagina {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.login-tarjeta,
+.login-demo,
+.inicio-bloque {
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  padding: 28px;
+}
+
+.login-tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-tarjeta h1 {
+  font-size: 1.6rem;
+  color: var(--azul);
+}
+
+.login-ayuda {
+  color: var(--texto-suave);
+  margin-bottom: 8px;
+}
+
+.login-tarjeta label {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.login-tarjeta input {
+  padding: 12px;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  font: inherit;
+}
+
+.login-tarjeta input:focus-visible {
+  outline: 3px solid #ffd29a;
+  border-color: var(--naranja);
+}
+
+.login-error {
+  color: #b3202f;
+  background: #fdecee;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+}
+
+.boton-ancho {
+  width: 100%;
+  text-align: center;
+}
+
+.boton:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.enlace {
+  background: none;
+  border: 0;
+  color: var(--azul-medio);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 6px;
+}
+
+.login-demo h2 {
+  font-size: 1.1rem;
+  color: var(--azul);
+}
+
+.login-demo > p {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  margin: 4px 0 16px;
+}
+
+.login-demo ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.login-demo li button {
+  width: 100%;
+  text-align: left;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-demo li button:hover {
+  border-color: var(--naranja);
+}
+
+.login-demo li span {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+/* ---------- Inicio por rol ---------- */
+.inicio {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  width: 100%;
+  display: grid;
+  gap: 20px;
+}
+
+.inicio-saludo h1 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--azul);
+}
+
+.inicio-saludo p {
+  color: var(--texto-suave);
+  margin-top: 6px;
+}
+
+.etiqueta-rol {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--azul);
+  color: var(--blanco);
+  font-size: 0.9rem;
+}
+
+.inicio-bloque h2 {
+  font-size: 1.15rem;
+  color: var(--azul);
+  margin-bottom: 14px;
+}
+
+.texto-suave {
+  color: var(--texto-suave);
+}
+
+.habilidades,
+.lista-proximamente {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.habilidades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.habilidades li {
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.95rem;
+}
+
+.habilidades li span {
+  margin-left: 8px;
+  color: var(--naranja-oscuro);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.lista-proximamente {
+  display: grid;
+  gap: 8px;
+}
+
+.lista-proximamente li {
+  padding-left: 22px;
+  position: relative;
+  color: var(--texto-suave);
+}
+
+.lista-proximamente li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.6em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--naranja);
+}
+
+@media (max-width: 760px) {
+  .login-pagina {
+    grid-template-columns: 1fr;
+  }
+}

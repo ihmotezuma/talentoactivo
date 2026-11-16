@@ -27,4 +27,5 @@ https://talentoactivo.pages.dev
 ## Avance por fases
 
 - [x] **Fase 1:** cimientos. Proyecto en GitHub, base de datos en Supabase y página de bienvenida publicada en Cloudflare Pages.
-- [ ] Fase 2: inicio de sesión, roles y datos de ejemplo de la Consultora Delfos.
+- [x] **Fase 2:** inicio de sesión con correo y contraseña, 3 roles (empleado, jefe, RR.HH.), 14 personas de ejemplo de la Consultora Delfos y reglas de privacidad en la base de datos.
+- [ ] Fase 3: perfil del empleado y disponibilidad.
