@@ -290,6 +290,7 @@ begin
   set estado = 'aprobada', aprobada_en = now()
   where id = p_tarea
     and creada_por = auth.uid()
+    and asignada_a <> auth.uid() -- nadie aprueba su propia tarea
     and public.mi_rol() = 'jefe'
     and estado = 'en_revision';
   if not found then

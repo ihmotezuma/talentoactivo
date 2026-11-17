@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
+import { plural } from './tareasComunes'
 
 const SEMAFORO = {
   rojo: { icono: '🔴', texto: 'Sobrecargada' },
@@ -38,9 +39,11 @@ function PanelRH() {
     .filter((a) => a.semaforo === 'rojo')
     .map((a) => {
       const partes = []
-      if (a.atrasadas > 0) partes.push(`${a.atrasadas} tareas atrasadas`)
+      if (a.atrasadas > 0) partes.push(`${a.atrasadas} ${plural(a.atrasadas, 'tarea atrasada', 'tareas atrasadas')}`)
       if (a.promedio >= 85) partes.push(`actividad promedio de ${a.promedio} %`)
-      if (a.apoyo_sin_asignar > 0) partes.push(`${a.apoyo_sin_asignar} pedidos de apoyo sin asignar`)
+      if (a.apoyo_sin_asignar > 0) partes.push(
+          `${a.apoyo_sin_asignar} ${plural(a.apoyo_sin_asignar, 'pedido de apoyo sin asignar', 'pedidos de apoyo sin asignar')}`,
+        )
       return `${a.area}: ${partes.join(', ')}.`
     })
 
@@ -59,7 +62,11 @@ function PanelRH() {
               ))}
             </ul>
             {disponibles.length > 0 && (
-              <p>Hay {disponibles.length} personas disponibles que podrían ayudar (ver abajo).</p>
+              <p>
+                Hay {disponibles.length}{' '}
+                {plural(disponibles.length, 'persona disponible que podría ayudar', 'personas disponibles que podrían ayudar')}{' '}
+                (ver abajo).
+              </p>
             )}
           </div>
         )}

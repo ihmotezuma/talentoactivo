@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
-import { ETIQUETA_ESTADO, SELECCION_TAREA } from './tareasComunes'
+import { ETIQUETA_ESTADO, SELECCION_TAREA, plural } from './tareasComunes'
 
 // Tarjeta del empleado: su disponibilidad y las tareas de apoyo que le asignaron.
 function MisApoyos({ usuario }) {
@@ -70,7 +70,7 @@ function MisApoyos({ usuario }) {
       )}
 
       {regulares > 0 && (
-        <p className="texto-suave">Además tienes {regulares} tareas regulares abiertas en tu área.</p>
+        <p className="texto-suave">Además tienes {regulares} {plural(regulares, 'tarea regular abierta', 'tareas regulares abiertas')} en tu área.</p>
       )}
 
       {error && <p className="aviso-error">{error}</p>}

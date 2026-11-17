@@ -60,7 +60,8 @@ function PanelJefe({ usuario }) {
 
   if (tareas === null) return null
 
-  const porAprobar = tareas.filter((t) => t.estado === 'en_revision')
+  // Nadie se aprueba a sí mismo: las tareas que hizo el propio jefe no aparecen aquí.
+  const porAprobar = tareas.filter((t) => t.estado === 'en_revision' && t.asignado_a_id !== usuario.id)
   const apoyos = tareas.filter((t) => t.tipo === 'apoyo' && t.estado !== 'en_revision')
 
   return (
@@ -73,7 +74,10 @@ function PanelJefe({ usuario }) {
               <li key={t.id} className="tarea">
                 <div className="tarea-cabeza">
                   <b>{t.titulo}</b>
-                  <span className="etiqueta-estado estado-en_revision">Terminada</span>
+                  <span>
+                    {t.tipo === 'apoyo' && <span className="etiqueta-estado etiqueta-apoyo">Apoyo de otra área</span>}{' '}
+                    <span className="etiqueta-estado estado-en_revision">Terminada</span>
+                  </span>
                 </div>
                 <p className="texto-suave">
                   Hecha por {t.asignado?.nombre} · {t.horas_estimadas} h estimadas

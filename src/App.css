@@ -523,3 +523,4 @@
 .tabla-envoltorio { overflow-x: auto; }
 .tabla-carga { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .tabla-carga th, .tabla-carga td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); white-space: nowrap; }
+.etiqueta-apoyo { background: #fff1de; color: var(--naranja-oscuro); }
