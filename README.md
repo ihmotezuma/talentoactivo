@@ -28,4 +28,5 @@ https://talentoactivo.pages.dev
 
 - [x] **Fase 1:** cimientos. Proyecto en GitHub, base de datos en Supabase y página de bienvenida publicada en Cloudflare Pages.
 - [x] **Fase 2:** inicio de sesión con correo y contraseña, 3 roles (empleado, jefe, RR.HH.), 14 personas de ejemplo de la Consultora Delfos y reglas de privacidad en la base de datos.
-- [ ] Fase 3: perfil del empleado y disponibilidad.
+- [x] **Fase 3:** consentimiento del monitoreo, tablas de actividad y tareas, y datos de ejemplo de 8 semanas.
+- [ ] **Fase 4:** tareas de apoyo (publicar, recomendar, asignar, aceptar o rechazar, terminar y aprobar) y panel de carga de RR.HH. Scripts: `supabase/05_fase4_tareas_apoyo.sql` y `06_recomendar_con_consentimiento.sql`.

@@ -9,6 +9,7 @@
 --   · Cuentas (Alejandro, Paola, Andrés): muy activos y con tareas atrasadas → sobrecargada.
 --   · María y Luis (Consumer Insights): menos del 40 % activos en sus últimos días laborales.
 --   · José Ángel: baja un poco (50 %), pero NO llega al umbral → no aparece como disponible.
+--   · Las 14 personas tienen aceptada la política de monitoreo (solo se recomienda a quien la aceptó).
 --   · El resto: actividad normal (64 % a 78 %).
 
 create or replace function public.cargar_datos_ejemplo()
@@ -206,6 +207,15 @@ begin
     and t.titulo = 'Preparar propuesta para cliente nuevo'
     and t.tipo = 'apoyo'
     and u.email = 'luis.gomez@delfos.example';
+
+  -- Las 14 personas de ejemplo ya aceptaron la política vigente (así la demo recomienda
+  -- a alguien). Si ya la habían aceptado, no se toca. Las aceptaciones no se borran nunca.
+  insert into public.consentimientos (perfil_id, version)
+  select pf.id, public.politica_version_actual()
+  from public.perfiles pf
+  join auth.users u on u.id = pf.id
+  where u.email like '%@delfos.example'
+  on conflict (perfil_id, version) do nothing;
 end;
 $$;
 

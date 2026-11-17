@@ -483,3 +483,43 @@
   gap: 18px;
   align-items: center;
 }
+
+/* ===== Fase 4: tareas de apoyo, recomendaciones y panel de carga ===== */
+.estado-disp { margin: 0 0 12px; color: var(--texto-suave); }
+.estado-disp-si { color: #1d6b3a; }
+.aviso-error { color: #b3261e; margin: 8px 0; }
+
+.tareas { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
+.tarea, .candidato { border: 1px solid var(--borde); border-radius: 10px; padding: 14px 16px; background: var(--blanco); }
+.tarea p, .candidato p { margin: 6px 0 0; }
+.tarea-cabeza { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+
+.etiqueta-estado { font-size: 0.8rem; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--fondo); color: var(--texto-suave); }
+.estado-asignada { background: #fff1de; color: var(--naranja-oscuro); }
+.estado-en_curso { background: #e3ecfb; color: var(--azul-medio); }
+.estado-en_revision { background: #e6f4ea; color: #1d6b3a; }
+.puntaje { font-weight: 700; color: var(--naranja-oscuro); }
+
+.acciones { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.boton-chico { display: inline-block; margin-top: 0; padding: 8px 18px; font-size: 0.95rem; }
+.boton-secundario { padding: 8px 18px; border: 1px solid var(--borde); border-radius: 10px; background: var(--blanco); color: var(--texto); font: inherit; font-size: 0.95rem; cursor: pointer; }
+.boton-secundario:hover { background: var(--fondo); }
+.boton:disabled, .boton-secundario:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.rechazo, .formulario-apoyo { display: grid; gap: 6px; margin-top: 12px; }
+.formulario-apoyo { border: 1px solid var(--borde); border-radius: 10px; padding: 16px; margin-bottom: 8px; }
+.formulario-apoyo input:not([type='checkbox']), .formulario-apoyo textarea, .rechazo textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--borde); border-radius: 8px; }
+.formulario-apoyo textarea, .rechazo textarea { min-height: 70px; resize: vertical; }
+.formulario-apoyo fieldset { border: 1px solid var(--borde); border-radius: 8px; padding: 10px 12px; margin: 6px 0 0; }
+.habilidades-elegir { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 6px; }
+.casilla { display: flex; align-items: center; gap: 8px; }
+
+.recomendaciones { margin-top: 12px; }
+.recomendaciones ol { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 10px; }
+.motivos { margin: 8px 0 12px; padding-left: 18px; }
+
+.alertas { background: #fdecea; border: 1px solid #f3b8b3; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; }
+.alertas ul { margin: 6px 0; padding-left: 18px; }
+.tabla-envoltorio { overflow-x: auto; }
+.tabla-carga { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.tabla-carga th, .tabla-carga td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); white-space: nowrap; }

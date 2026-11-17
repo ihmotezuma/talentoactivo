@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Monitoreo from './Monitoreo'
+import MisApoyos from './MisApoyos'
+import PanelJefe from './PanelJefe'
+import PanelRH from './PanelRH'
 
 const etiquetaRol = {
   empleado: 'Empleado',
@@ -17,15 +20,12 @@ const etiquetaNivel = {
 // Lo que cada rol podrá hacer. Se irá activando en las próximas fases.
 const proximamente = {
   empleado: [
-    'Aparecer como disponible cuando tengas poca actividad y recibir tareas de apoyo para aceptar o rechazar (Fase 4)',
     'Ver tu semana: tu actividad, tus tareas y las habilidades que ganas (Fase 7)',
   ],
   jefe: [
-    'Publicar tareas de apoyo y ver a quién recomienda el sistema, y por qué (Fase 4)',
-    'Aprobar las tareas terminadas (Fase 4)',
+    'Ver la semana de tu equipo y las habilidades que ganan quienes te ayudan (Fase 7)',
   ],
   rh: [
-    'Ver el panel de carga de todas las áreas y quién está disponible (Fase 4)',
     'Leer el informe con recomendaciones del asistente de IA (Fase 6)',
     'Ver los números que demuestran que funciona (Fase 8)',
   ],
@@ -95,6 +95,10 @@ function Inicio({ usuario }) {
       </section>
 
       <Monitoreo usuario={usuario} />
+
+      {perfil.rol === 'empleado' && <MisApoyos usuario={usuario} />}
+      {perfil.rol === 'jefe' && <PanelJefe usuario={usuario} />}
+      {perfil.rol === 'rh' && <PanelRH />}
 
       <section className="inicio-bloque">
         <h2>Próximamente para ti</h2>
