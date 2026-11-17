@@ -426,3 +426,60 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== Monitoreo y política de uso (Fase 3) ===== */
+.inicio-bloque > .boton + .monitoreo-aviso,
+.monitoreo-aviso {
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+
+.monitoreo-ok {
+  color: #1b7a3d;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.politica h2 {
+  margin-bottom: 6px;
+}
+
+.politica-puntos {
+  display: grid;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.politica-puntos > div {
+  border-left: 3px solid var(--naranja);
+  padding-left: 14px;
+}
+
+.politica-puntos dt {
+  font-weight: 700;
+  color: var(--azul);
+}
+
+.politica-puntos dd {
+  margin: 2px 0 0;
+}
+
+.politica-casilla {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.politica-casilla input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--naranja);
+}
+
+.politica-botones {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
