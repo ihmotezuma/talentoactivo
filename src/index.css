@@ -46,3 +46,11 @@ p {
 .ia-respuesta-caja { margin-top: 14px; border: 1px solid var(--borde); border-radius: 10px; padding: 16px; background: var(--blanco); }
 .ia-respuesta-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--borde); }
 .ia-respuesta-texto { white-space: pre-wrap; line-height: 1.55; margin: 0; }
+
+/* ===== Fase 7: Mi semana y Semana de mi equipo ===== */
+.semana-metricas { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 12px 0 16px; }
+.semana-tarjeta { border: 1px solid var(--borde); border-radius: 10px; padding: 12px 14px; background: var(--blanco); }
+.semana-tarjeta-valor { display: block; font-size: 1.35rem; font-weight: 700; color: var(--naranja-oscuro); margin-top: 4px; }
+.semana-subtitulo { margin: 16px 0 8px; font-size: 1rem; }
+.chips-habilidades { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip-habilidad { font-size: 0.82rem; padding: 3px 10px; border-radius: 999px; background: #fff1de; color: var(--naranja-oscuro); font-weight: 600; }

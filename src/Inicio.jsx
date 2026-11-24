@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { supabase } from './supabaseClient'
 import Monitoreo from './Monitoreo'
 import MisApoyos from './MisApoyos'
+import MiSemana from './MiSemana'
 import PanelJefe from './PanelJefe'
+import SemanaEquipo from './SemanaEquipo'
 import PanelRH from './PanelRH'
 
 const etiquetaRol = {
@@ -17,24 +19,22 @@ const etiquetaNivel = {
   avanzado: 'Avanzado',
 }
 
-// Lo que cada rol podrá hacer. Se irá activando en las próximas fases.
 const proximamente = {
-  empleado: [
-    'Ver tu semana: tu actividad, tus tareas y las habilidades que ganas (Fase 7)',
-  ],
-  jefe: [
-    'Ver la semana de tu equipo y las habilidades que ganan quienes te ayudan (Fase 7)',
-  ],
-  rh: [
-    'Leer el informe con recomendaciones del asistente de IA (Fase 6)',
-    'Ver los números que demuestran que funciona (Fase 8)',
-  ],
+  rh: ['Ver los números que demuestran que funciona (Fase 8)'],
 }
 
 function Inicio({ usuario }) {
   const [perfil, setPerfil] = useState(null)
   const [habilidades, setHabilidades] = useState([])
   const [problema, setProblema] = useState('')
+
+  async function cargarHabilidades() {
+    const { data: lista } = await supabase
+      .from('perfil_habilidades')
+      .select('nivel, habilidades(nombre)')
+      .eq('perfil_id', usuario.id)
+    setHabilidades(lista ?? [])
+  }
 
   useEffect(() => {
     let activo = true
@@ -67,6 +67,7 @@ function Inicio({ usuario }) {
   if (!perfil) return <p className="cargando">Cargando…</p>
 
   const primerNombre = perfil.nombre.split(' ')[0]
+  const pendientesRol = proximamente[perfil.rol] ?? []
 
   return (
     <main className="inicio">
@@ -96,18 +97,32 @@ function Inicio({ usuario }) {
 
       <Monitoreo usuario={usuario} />
 
-      {perfil.rol === 'empleado' && <MisApoyos usuario={usuario} />}
-      {perfil.rol === 'jefe' && <PanelJefe usuario={usuario} />}
+      {perfil.rol === 'empleado' && (
+        <>
+          <MisApoyos usuario={usuario} />
+          <MiSemana usuario={usuario} onHabilidadGanada={cargarHabilidades} />
+        </>
+      )}
+
+      {perfil.rol === 'jefe' && (
+        <>
+          <PanelJefe usuario={usuario} />
+          <SemanaEquipo />
+        </>
+      )}
+
       {perfil.rol === 'rh' && <PanelRH />}
 
-      <section className="inicio-bloque">
-        <h2>Próximamente para ti</h2>
-        <ul className="lista-proximamente">
-          {proximamente[perfil.rol].map((texto) => (
-            <li key={texto}>{texto}</li>
-          ))}
-        </ul>
-      </section>
+      {pendientesRol.length > 0 && (
+        <section className="inicio-bloque">
+          <h2>Próximamente para ti</h2>
+          <ul className="lista-proximamente">
+            {pendientesRol.map((texto) => (
+              <li key={texto}>{texto}</li>
+            ))}
+          </ul>
+        </section>
+      )}
     </main>
   )
 }
