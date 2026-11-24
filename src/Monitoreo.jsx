@@ -48,7 +48,6 @@ function Monitoreo({ usuario }) {
       .from('consentimientos')
       .insert({ perfil_id: usuario.id, version: VERSION_POLITICA })
     setGuardando(false)
-    // 23505 = ya la había aceptado (por ejemplo, doble clic): cuenta como aceptada.
     if (err && err.code !== '23505') {
       setError('No pudimos guardar tu aceptación. Inténtalo de nuevo.')
       return
@@ -103,9 +102,19 @@ function Monitoreo({ usuario }) {
           <p className="monitoreo-ok">
             ✓ Aceptaste la política el {formatoFecha.format(new Date(aceptadoEn))}.
           </p>
-          <a className="boton" href="/TalentoActivo-Mac.zip" download>
-            Descargar para Mac
-          </a>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1rem' }}>
+            <a className="boton" href="/TalentoActivo-Mac.zip" download>
+              Descargar para Mac
+            </a>
+            <a className="boton" href="/TalentoActivo-Windows.zip" download>
+              Descargar para Windows
+            </a>
+          </div>
+
+          <p>
+            <b>Instalación en Mac (macOS 12 o más reciente):</b>
+          </p>
           <ol className="pasos-instalacion">
             <li>Abre el archivo descargado y arrastra <b>TalentoActivo</b> a la carpeta Aplicaciones.</li>
             <li>
@@ -118,7 +127,23 @@ function Monitoreo({ usuario }) {
               superior: desde ahí puedes pausarlo o desinstalarlo cuando quieras.
             </li>
           </ol>
-          <p className="texto-suave monitoreo-aviso">Para Mac con macOS 12 o más reciente.</p>
+
+          <p style={{ marginTop: '1rem' }}>
+            <b>Instalación en Windows (Windows 10 / 11):</b>
+          </p>
+          <ol className="pasos-instalacion">
+            <li>
+              Extrae el contenido de <b>TalentoActivo-Windows.zip</b> en una carpeta (por ejemplo, en el Escritorio).
+            </li>
+            <li>
+              Haz doble clic en <b>Iniciar-TalentoActivo.bat</b>. Si Windows SmartScreen muestra un aviso, pulsa
+              «Más información» y luego «Ejecutar de todas formas».
+            </li>
+            <li>
+              Escribe tu correo y contraseña de TalentoActivo y minimiza la ventana mientras trabajas; para detenerlo,
+              simplemente ciérrala.
+            </li>
+          </ol>
         </>
       )}
     </section>
