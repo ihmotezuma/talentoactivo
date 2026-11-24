@@ -103,12 +103,22 @@ function Monitoreo({ usuario }) {
           <p className="monitoreo-ok">
             ✓ Aceptaste la política el {formatoFecha.format(new Date(aceptadoEn))}.
           </p>
-          <button type="button" className="boton" disabled>
+          <a className="boton" href="/TalentoActivo-Mac.zip" download>
             Descargar para Mac
-          </button>
-          <p className="texto-suave monitoreo-aviso">
-            El programa estará disponible para descargar en la Fase 5.
-          </p>
+          </a>
+          <ol className="pasos-instalacion">
+            <li>Abre el archivo descargado y arrastra <b>TalentoActivo</b> a la carpeta Aplicaciones.</li>
+            <li>
+              Ábrelo desde Aplicaciones. La primera vez, macOS avisará que no puede verificar al
+              desarrollador: entra en Ajustes del Sistema, Privacidad y seguridad, y pulsa
+              «Abrir de todos modos».
+            </li>
+            <li>
+              Inicia sesión con tu correo y contraseña de TalentoActivo. Verás <b>TA ●</b> en la barra
+              superior: desde ahí puedes pausarlo o desinstalarlo cuando quieras.
+            </li>
+          </ol>
+          <p className="texto-suave monitoreo-aviso">Para Mac con macOS 12 o más reciente.</p>
         </>
       )}
     </section>

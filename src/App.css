@@ -524,3 +524,7 @@
 .tabla-carga { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .tabla-carga th, .tabla-carga td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--borde); white-space: nowrap; }
 .etiqueta-apoyo { background: #fff1de; color: var(--naranja-oscuro); }
+
+/* ===== Fase 5: descarga del programa para Mac ===== */
+a.boton { text-decoration: none; width: fit-content; }
+.pasos-instalacion { margin: 16px 0 0; padding-left: 20px; display: grid; gap: 6px; }

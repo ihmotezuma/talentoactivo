@@ -27,3 +27,7 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Programa de Mac: archivos generados al construir
+agente-mac/construido/
+agente-mac/Fuentes/Config.generado.swift
