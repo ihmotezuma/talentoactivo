@@ -14,7 +14,14 @@ const SUGERENCIAS = [
   'Redacta un mensaje breve y amable para pedir apoyo a una persona disponible.',
 ]
 
-// Panel de carga de Recursos Humanos: semáforo por área, personas disponibles y asistente de IA.
+function limpiarMarkdown(texto) {
+  return texto
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/__(.*?)__/g, '$1')
+    .replace(/^#{1,6}\s+/gm, '')
+    .trim()
+}
+
 function PanelRH() {
   const [areas, setAreas] = useState(null)
   const [disponibles, setDisponibles] = useState([])
@@ -24,6 +31,7 @@ function PanelRH() {
   const [respuestaIA, setRespuestaIA] = useState('')
   const [cargandoIA, setCargandoIA] = useState(false)
   const [errorIA, setErrorIA] = useState('')
+  const [copiado, setCopiado] = useState(false)
 
   useEffect(() => {
     let activo = true
@@ -52,6 +60,7 @@ function PanelRH() {
     setCargandoIA(true)
     setErrorIA('')
     setRespuestaIA('')
+    setCopiado(false)
 
     const { data, error: fnError } = await supabase.functions.invoke('asistente-rh', {
       body: { pregunta: consulta, areas, disponibles },
@@ -64,7 +73,18 @@ function PanelRH() {
       return
     }
 
-    setRespuestaIA(data.respuesta)
+    setRespuestaIA(limpiarMarkdown(data.respuesta))
+  }
+
+  async function copiarRespuesta() {
+    if (!respuestaIA) return
+    try {
+      await navigator.clipboard.writeText(respuestaIA)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2500)
+    } catch {
+      setCopiado(false)
+    }
   }
 
   if (areas === null) return null
@@ -172,22 +192,14 @@ function PanelRH() {
           Consulta sobre la carga actual de las áreas, riesgos de atraso o recomendaciones para reasignar personal disponible.
         </p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
+        <div className="ia-sugerencias">
           {SUGERENCIAS.map((s) => (
             <button
               key={s}
               type="button"
+              className="boton-secundario ia-sugerencia-btn"
               onClick={() => consultarIA(s)}
               disabled={cargandoIA}
-              style={{
-                background: '#f1f5f9',
-                color: '#0f172a',
-                border: '1px solid #cbd5e1',
-                borderRadius: '6px',
-                padding: '0.4rem 0.7rem',
-                fontSize: '0.85rem',
-                cursor: 'pointer',
-              }}
             >
               {s}
             </button>
@@ -195,39 +207,21 @@ function PanelRH() {
         </div>
 
         <form
+          className="ia-form"
           onSubmit={(e) => {
             e.preventDefault()
             consultarIA()
           }}
-          style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}
         >
           <input
             type="text"
+            className="ia-input"
             value={pregunta}
             onChange={(e) => setPregunta(e.target.value)}
             placeholder="Escribe tu consulta para el asistente..."
             disabled={cargandoIA}
-            style={{
-              flex: 1,
-              padding: '0.55rem 0.75rem',
-              borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              fontSize: '0.95rem',
-            }}
           />
-          <button
-            type="submit"
-            disabled={cargandoIA || !pregunta.trim()}
-            style={{
-              background: '#e67e22',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              padding: '0.55rem 1rem',
-              fontWeight: '600',
-              cursor: 'pointer',
-            }}
-          >
+          <button type="submit" className="boton ia-submit" disabled={cargandoIA || !pregunta.trim()}>
             {cargandoIA ? 'Analizando...' : 'Consultar'}
           </button>
         </form>
@@ -235,17 +229,14 @@ function PanelRH() {
         {errorIA && <p className="aviso-error">{errorIA}</p>}
 
         {respuestaIA && (
-          <div
-            style={{
-              background: '#f8fafc',
-              border: '1px solid #e2e8f0',
-              borderRadius: '8px',
-              padding: '1rem',
-              whiteSpace: 'pre-wrap',
-              lineHeight: '1.5',
-            }}
-          >
-            {respuestaIA}
+          <div className="ia-respuesta-caja">
+            <div className="ia-respuesta-cabeza">
+              <b>Recomendación del asistente</b>
+              <button type="button" className="boton-secundario" onClick={copiarRespuesta}>
+                {copiado ? '✓ Copiado' : 'Copiar respuesta'}
+              </button>
+            </div>
+            <p className="ia-respuesta-texto">{respuestaIA}</p>
           </div>
         )}
       </section>

@@ -34,3 +34,15 @@ h3 {
 p {
   margin: 0;
 }
+
+/* ===== Fase 6: descarga Windows y Asistente de IA ===== */
+.descargas-botones { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0 16px; }
+.ia-sugerencias { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.ia-sugerencia-btn { text-align: left; font-size: 0.9rem; line-height: 1.35; }
+.ia-form { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.ia-input { flex: 1; min-width: 240px; font: inherit; padding: 10px 12px; border: 1px solid var(--borde); border-radius: 10px; background: var(--blanco); }
+.ia-input:focus { outline: none; border-color: var(--naranja-oscuro); }
+.ia-submit { margin-top: 0; padding: 10px 20px; }
+.ia-respuesta-caja { margin-top: 14px; border: 1px solid var(--borde); border-radius: 10px; padding: 16px; background: var(--blanco); }
+.ia-respuesta-cabeza { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--borde); }
+.ia-respuesta-texto { white-space: pre-wrap; line-height: 1.55; margin: 0; }

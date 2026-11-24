@@ -1,4 +1,3 @@
-# Agente de monitoreo de actividad para Windows - TalentoActivo
 $ErrorActionPreference = "Stop"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -34,6 +33,7 @@ public class IdleTime {
 $carpetaDatos = Join-Path $env:APPDATA "TalentoActivo"
 if (-not (Test-Path $carpetaDatos)) { New-Item -ItemType Directory -Path $carpetaDatos | Out-Null }
 $rutaSesion = Join-Path $carpetaDatos "sesion.json"
+$rutaPendientes = Join-Path $carpetaDatos "pendientes.json"
 
 function Pedir-Token($grant, $cuerpoObj) {
     $headers = @{
@@ -41,8 +41,7 @@ function Pedir-Token($grant, $cuerpoObj) {
         "Content-Type" = "application/json"
     }
     $body = $cuerpoObj | ConvertTo-Json -Compress
-    $resp = Invoke-RestMethod -Uri "$SUPABASE_URL/auth/v1/token?grant_type=$grant" -Method Post -Headers $headers -Body $body
-    return $resp
+    return Invoke-RestMethod -Uri "$SUPABASE_URL/auth/v1/token?grant_type=$grant" -Method Post -Headers $headers -Body $body
 }
 
 $sesion = $null
@@ -58,7 +57,6 @@ if (Test-Path $rutaSesion) {
             expira       = (Get-Date).AddSeconds($resp.expires_in - 60)
         }
         $sesion | ConvertTo-Json | Set-Content $rutaSesion
-        Write-Host "Sesion restaurada para $($sesion.email)" -ForegroundColor Green
     } catch {
         Remove-Item $rutaSesion -ErrorAction SilentlyContinue
     }
@@ -93,8 +91,16 @@ while (-not $sesion) {
 }
 
 Write-Host "`nMonitoreo activo para $($sesion.email)." -ForegroundColor Green
-Write-Host "Mide actividad cada minuto y envia bloques cada 5 minutos."
-Write-Host "Deja esta ventana minimizada mientras trabajas. Cierrala para detener.`n" -ForegroundColor Yellow
+Write-Host "Guarda bloques localmente si no hay internet y los envia al reconectar."
+Write-Host "Ya puedes cerrar esta ventana y usar 'Iniciar-Segundo-Plano.vbs' si deseas que corra oculto.`n" -ForegroundColor Yellow
+
+$pendientes = @()
+if (Test-Path $rutaPendientes) {
+    try {
+        $cargados = Get-Content $rutaPendientes -Raw | ConvertFrom-Json
+        if ($cargados) { $pendientes = @($cargados) }
+    } catch { $pendientes = @() }
+}
 
 $activos = 0
 $inactivos = 0
@@ -112,6 +118,18 @@ while ($true) {
     }
 
     if (($activos + $inactivos) -ge 5) {
+        $pendientes += @{
+            perfil_id         = $sesion.userId
+            inicio            = $inicioBloque
+            minutos_activos   = $activos
+            minutos_inactivos = $inactivos
+            origen            = "agente"
+        }
+        $pendientes | ConvertTo-Json -Compress | Set-Content $rutaPendientes
+        $activos = 0
+        $inactivos = 0
+        $inicioBloque = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+
         try {
             if ((Get-Date) -ge [datetime]$sesion.expira) {
                 $resp = Pedir-Token "refresh_token" @{ refresh_token = $sesion.refreshToken }
@@ -127,24 +145,14 @@ while ($true) {
                 "Content-Type"  = "application/json"
                 "Prefer"        = "resolution=ignore-duplicates,return=minimal"
             }
-            $fila = @(
-                @{
-                    perfil_id         = $sesion.userId
-                    inicio            = $inicioBloque
-                    minutos_activos   = $activos
-                    minutos_inactivos = $inactivos
-                    origen            = "agente"
-                }
-            ) | ConvertTo-Json -Compress
+            $cuerpoJson = ConvertTo-Json -InputObject @($pendientes) -Compress
+            Invoke-RestMethod -Uri "$SUPABASE_URL/rest/v1/actividad_bloques?on_conflict=perfil_id,inicio" -Method Post -Headers $headers -Body $cuerpoJson | Out-Null
 
-            Invoke-RestMethod -Uri "$SUPABASE_URL/rest/v1/actividad_bloques?on_conflict=perfil_id,inicio" -Method Post -Headers $headers -Body $fila | Out-Null
-            Write-Host "-> Bloque enviado a TalentoActivo ($activos act / $inactivos inact)." -ForegroundColor Cyan
-
-            $activos = 0
-            $inactivos = 0
-            $inicioBloque = (Get-Date).ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")
+            Write-Host "-> $($pendientes.Count) bloque(s) enviado(s) a TalentoActivo." -ForegroundColor Cyan
+            $pendientes = @()
+            Remove-Item $rutaPendientes -ErrorAction SilentlyContinue
         } catch {
-            Write-Host "-> Error al enviar bloque (se reintentara): $($_.Exception.Message)" -ForegroundColor Red
+            Write-Host "-> Sin conexion o error temporal. $($pendientes.Count) bloque(s) guardado(s) en cola local." -ForegroundColor Yellow
         }
     }
 }

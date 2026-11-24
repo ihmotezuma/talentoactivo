@@ -8,9 +8,8 @@ const formatoFecha = new Intl.DateTimeFormat('es', {
   timeStyle: 'short',
 })
 
-// Tarjeta "Monitoreo de actividad": consentimiento primero, descarga después.
 function Monitoreo({ usuario }) {
-  const [estado, setEstado] = useState('cargando') // cargando | pendiente | aceptado | error
+  const [estado, setEstado] = useState('cargando')
   const [aceptadoEn, setAceptadoEn] = useState(null)
   const [leyendo, setLeyendo] = useState(false)
   const [guardando, setGuardando] = useState(false)
@@ -103,7 +102,7 @@ function Monitoreo({ usuario }) {
             ✓ Aceptaste la política el {formatoFecha.format(new Date(aceptadoEn))}.
           </p>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1rem' }}>
+          <div className="descargas-botones">
             <a className="boton" href="/TalentoActivo-Mac.zip" download>
               Descargar para Mac
             </a>
@@ -128,7 +127,7 @@ function Monitoreo({ usuario }) {
             </li>
           </ol>
 
-          <p style={{ marginTop: '1rem' }}>
+          <p style={{ marginTop: '16px' }}>
             <b>Instalación en Windows (Windows 10 / 11):</b>
           </p>
           <ol className="pasos-instalacion">
@@ -136,12 +135,12 @@ function Monitoreo({ usuario }) {
               Extrae el contenido de <b>TalentoActivo-Windows.zip</b> en una carpeta (por ejemplo, en el Escritorio).
             </li>
             <li>
-              Haz doble clic en <b>Iniciar-TalentoActivo.bat</b>. Si Windows SmartScreen muestra un aviso, pulsa
-              «Más información» y luego «Ejecutar de todas formas».
+              La primera vez, abre <b>Iniciar-TalentoActivo.bat</b> e inicia sesión con tu correo y contraseña
+              (si Windows SmartScreen avisa, pulsa «Más información» y «Ejecutar de todas formas»).
             </li>
             <li>
-              Escribe tu correo y contraseña de TalentoActivo y minimiza la ventana mientras trabajas; para detenerlo,
-              simplemente ciérrala.
+              Luego puedes dejarlo minimizado o usar <b>Iniciar-Segundo-Plano.vbs</b> para que funcione oculto
+              y reenvíe datos automáticamente si se pierde la conexión.
             </li>
           </ol>
         </>
